@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            background-color: #eef7fd;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        h1 {
+            font-size: 40px;
+            color: #3c6e71;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 40px;
+            margin-bottom: 30px;
+            color: #000;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .start {
+            background-color: #86c5a7;
+        }
+        .stop {
+            background-color: #e06d6d;
+        }
+        .reset {
+            background-color: #a8e6a1;
+        }
+        .link {
+            text-decoration: none;
+            background-color: #3c6e71;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .link:hover {
+            background-color: #2b4f52;
+        }
+    </style>
+</head>
+<body>
+    <h1>TIMER</h1>
+    <div id="timer">25 : 00</div>
+    <div class="buttons">
+        <button class="start" onclick="startTimer()">START</button>
+        <button class="stop" onclick="stopTimer()">STOP</button>
+        <button class="reset" onclick="resetTimer()">RESET</button>
+    </div>
+    <a class="link" href="todolist.html">Go to To-Do List</a>
+    <script>
+        let minutes = 25;
+        let seconds = 0;
+        let interval = null;
+        function updateDisplay() {
+            const minDisplay = minutes < 10 ? '0' + minutes : minutes;
+            const secDisplay = seconds < 10 ? '0' + seconds : seconds;
+            document.getElementById("timer").textContent = `${minDisplay} : ${secDisplay}`;
+        }
+        function startTimer() {
+            if (interval !== null) return;
+            interval = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(interval);
+                        interval = null;
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+                updateDisplay();
+            }, 1000);
+        }
+        function stopTimer() {
+            clearInterval(interval);
+            interval = null;
+        }
+        function resetTimer() {
+            stopTimer();
+            minutes = 25;
+            seconds = 0;
+            updateDisplay();
+        }
+        updateDisplay();
+    </script>
+</body>
+</html>
